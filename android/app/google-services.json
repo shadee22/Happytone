@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "183367452852",
+    "project_id": "happytone-c9209",
+    "storage_bucket": "happytone-c9209.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:183367452852:android:bf8941152a922ee7276fe1",
+        "android_client_info": {
+          "package_name": "com.example.happytone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "183367452852-5q2svu2h2fa4olmph2haskrpjb0koieb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC97e9x6Sfe2AuIHCTyo7TymRuOTPP5Sf4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "183367452852-5q2svu2h2fa4olmph2haskrpjb0koieb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
