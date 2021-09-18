@@ -68,11 +68,11 @@ class _RegisterState extends State<Register> {
                       /*                                   //NAME                                   */
                       /* -------------------------------------------------------------------------- */
                       TextFormField(
-                        onChanged: (value) => _name = value,
+                        onChanged: (value) => _name = value.toLowerCase(),
                         toolbarOptions: toolbar,
                         validator: (val) {
-                          return val!.isEmpty || val.length < 6
-                              ? '|| Enter A Proper Username'
+                          return val!.isEmpty || val.length < 6 || val.contains(' ')
+                              ? '|| Enter A Proper Username (Whithout Spaces)'
                               : null;
                         },
                         controller: nameController,
@@ -85,7 +85,7 @@ class _RegisterState extends State<Register> {
                       /* -------------------------------------------------------------------------- */
                       TextFormField(
                         onChanged: (val) {
-                          _email = val;
+                          _email = val.toLowerCase();
                         },
                         validator: (val) {
                           return RegExp(
@@ -110,8 +110,8 @@ class _RegisterState extends State<Register> {
                       TextFormField(
                         style: TextStyle(color: Colors.white),
                         validator: (val) {
-                          return val!.isEmpty || val.length < 6
-                              ? '|| Enter valid Password'
+                          return val!.isEmpty || val.length < 6 || val.contains(' ')
+                              ? '|| Enter valid Password (That should not have Spaces ) '
                               : null;
                         },
                         toolbarOptions: toolbar,
@@ -184,10 +184,11 @@ class _RegisterState extends State<Register> {
                                         .then((value) => print(value));
                                     /* -------------------------------- database -------------------------------- */
 
-                                    Map<String, dynamic> register_details_map = {
-                                      "name" : _name ,
-                                      "email" : _email , 
-                                      "password" : _password,
+                                    Map<String, dynamic> register_details_map =
+                                        {
+                                      "name": _name,
+                                      "email": _email,
+                                      "password": _password,
                                     };
 
                                     db.setUserDetails(register_details_map);

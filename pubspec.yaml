@@ -45,6 +45,7 @@ dependencies:
   flutter_fadein: ^2.0.0
   show_up_animation: ^2.0.0
   outline_gradient_button: ^2.0.0+1
+  shared_preferences: ^2.0.7
   # firebase_analytics: ^8.3.0
 
 dev_dependencies:

@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, deprecated_member_use
+// ignore_for_file: prefer_const_constructors, deprecated_member_use, unnecessary_this, prefer_is_empty
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,6 +10,12 @@ final greyBgColor = Color(0xff202020);
 final loginButtonColor = Color(0xffFF9500);
 final grey = Color(0xffCED4DA);
 final white = Colors.white;
+
+extension CapExtension on String {
+  String get inCaps => this.length > 0 ?'${this[0].toUpperCase()}${this.substring(1)}':'';
+  String get allInCaps => this.toUpperCase();
+  String get capitalizeFirstofEach => this.replaceAll(RegExp(' +'), ' ').split(" ").map((str) => str.inCaps).join(" ");
+}
 
 //FONTS
 final robotoFont = GoogleFonts.roboto();

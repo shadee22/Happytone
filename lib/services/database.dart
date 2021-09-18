@@ -16,9 +16,10 @@ class Database {
         .then((document) {
       return document;
     });
-
   }
 
+  Stream<QuerySnapshot> allusers = name_password.snapshots();
+ 
   setUserDetails(register_details_map) {
     final documentName = register_details_map['name'];
 

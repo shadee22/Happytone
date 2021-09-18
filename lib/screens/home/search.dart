@@ -22,7 +22,7 @@ class _SearchState extends State<Search> {
 
   searchResults(searchKeyword) async {
     return await db.getUserData(searchKeyword).then((value) {
-      print(" this is the value : $value");
+      // print(" this is the value : $value");
 
       setState(() {
         searchResultSnapshot = value;
@@ -38,7 +38,7 @@ class _SearchState extends State<Search> {
           final username = searchResultSnapshot?.docs[index].get('name');
           final useremail = searchResultSnapshot?.docs[index].get('email');
           return ShowUpAnimation(
-            delayStart: Duration(milliseconds: 300),
+
             animationDuration: Duration(milliseconds: 1000),
             curve: Curves.elasticInOut,
             direction: Direction.horizontal,
