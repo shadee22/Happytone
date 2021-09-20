@@ -9,18 +9,24 @@ class MainUser {
 
 class Authentication {
   FirebaseAuth auth = FirebaseAuth.instance;
+
   MainUser? mainUser(uid) {
-    return uid.exists() ? MainUser(userid: uid) : null;
+    return uid != null ? MainUser(userid: uid) : null;
   }
 
-  Future loginInWithEmail(String _email, String _password) async {
+  loginInWithEmail(String _email, String _password) async {
     try {
-      UserCredential result = await auth.signInWithEmailAndPassword(
-          email: _email, password: _password);
+      UserCredential result = await auth
+          .signInWithEmailAndPassword(email: _email, password: _password)
+          .then((e) {
+        print('MAIN ERROR : $e');
+        return e;
+      });
       User? user = result.user;
       return mainUser(user!.uid);
     } catch (e) {
-      return e.toString();
+      print("AUTHENTICATION ERROR : $e");
+      return null;
     }
   }
 

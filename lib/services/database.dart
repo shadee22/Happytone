@@ -9,7 +9,7 @@ CollectionReference name_password =
     FirebaseFirestore.instance.collection('Name_Passwords');
 
 class Database {
-  getUserData(String username) async {
+  getUserByUsername(String username) async {
     return await name_password
         .where('name', isEqualTo: username)
         .get()
@@ -17,6 +17,15 @@ class Database {
       return document;
     });
   }
+  getUserByEmail(String email) async {
+    return await name_password
+        .where('email', isEqualTo: email)
+        .get()
+        .then((document) {
+      return document;
+    });
+  }
+
 
   Stream<QuerySnapshot> allusers = name_password.snapshots();
  

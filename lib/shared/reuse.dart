@@ -10,11 +10,17 @@ final greyBgColor = Color(0xff202020);
 final loginButtonColor = Color(0xffFF9500);
 final grey = Color(0xffCED4DA);
 final white = Colors.white;
+final black = Colors.black;
 
 extension CapExtension on String {
-  String get inCaps => this.length > 0 ?'${this[0].toUpperCase()}${this.substring(1)}':'';
+  String get inCaps =>
+      this.length > 0 ? '${this[0].toUpperCase()}${this.substring(1)}' : '';
   String get allInCaps => this.toUpperCase();
-  String get capitalizeFirstofEach => this.replaceAll(RegExp(' +'), ' ').split(" ").map((str) => str.inCaps).join(" ");
+  String get capitalizeFirstofEach => this
+      .replaceAll(RegExp(' +'), ' ')
+      .split(" ")
+      .map((str) => str.inCaps)
+      .join(" ");
 }
 
 //FONTS
@@ -47,18 +53,19 @@ final toolbar = ToolbarOptions(
 );
 
 final inputDecoration = InputDecoration(
-  
-
   focusedErrorBorder: OutlineInputBorder(
-    borderSide: BorderSide(width: 1 , color : Colors.orange , ),
-    borderRadius : BorderRadius.all(Radius.circular(50)),
+    borderSide: BorderSide(
+      width: 1,
+      color: Colors.orange,
+    ),
+    borderRadius: BorderRadius.all(Radius.circular(50)),
   ),
   prefixIcon: Icon(Icons.fingerprint, color: loginButtonColor),
   hintText: 'Your name',
   hintStyle: TextStyle(
     color: Colors.white,
   ),
-  label: Text('Username'),
+  labelText: "Username",
   labelStyle: TextStyle(color: white.withOpacity(0.7)),
   fillColor: Colors.grey.withOpacity(0.2),
   filled: true,

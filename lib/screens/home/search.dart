@@ -21,7 +21,7 @@ class _SearchState extends State<Search> {
   QuerySnapshot? searchResultSnapshot;
 
   searchResults(searchKeyword) async {
-    return await db.getUserData(searchKeyword).then((value) {
+    return await db.getUserByEmail(searchKeyword).then((value) {
       // print(" this is the value : $value");
 
       setState(() {
