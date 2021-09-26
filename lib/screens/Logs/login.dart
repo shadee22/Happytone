@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:happytone/services/database.dart';
 import 'package:happytone/services/auth.dart';
 import 'package:happytone/services/helper.dart';
+import 'package:happytone/services/models.dart';
 import 'package:happytone/shared/reuse.dart';
 import 'package:happytone/shared/loading.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -36,7 +37,7 @@ class _LoginState extends State<Login> {
     super.initState();
   }
 
-  var _email = '';
+  var _username = '';
   var _password = '';
   var _error = '';
 
@@ -55,6 +56,32 @@ class _LoginState extends State<Login> {
                       SizedBox(height: 60),
                       logo,
                       SizedBox(height: 20),
+                      svg,
+                      SizedBox(height: 20),
+
+                      if (_error != '')
+                        ShowUpAnimation(
+                          offset: 3,
+                          curve: Curves.bounceInOut,
+                          animationDuration: Duration(seconds: 1),
+                          direction: Direction.horizontal,
+                          child: Chip(
+                            avatar: CircleAvatar(
+                              child: Icon(Icons.wrong_location,
+                                  color: Colors.redAccent, size: 30),
+                              backgroundColor: black,
+                            ),
+                            labelPadding: EdgeInsets.fromLTRB(0, 10, 5, 10),
+                            backgroundColor: Colors.redAccent,
+                            label: Text(
+                              _error,
+                              style: GoogleFonts.roboto(
+                                  fontSize: 16, fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ),
+                      // SizedBox(height: 20),
+
                       Align(
                         alignment: Alignment.bottomLeft,
                         child: Text(
@@ -71,29 +98,55 @@ class _LoginState extends State<Login> {
                         key: loginFormKey,
                         child: Column(
                           children: [
-                            //name
+                            /* -------------------------------------------------------------------------- */
+                            /*                                   EMAIL                                   */
+                            /* -------------------------------------------------------------------------- */
+                            // TextFormField(
+                            //   onChanged: (value) {
+                            //     setState(() {
+                            //       _username = value;
+                            //     });
+                            //   },
+                            //   validator: (value) {
+                            //     setState(() {
+                            //       _username = value!;
+                            //     });
+                            //     return RegExp(
+                            //                 r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+                            //             .hasMatch(value!)
+                            //         ? null
+                            //         : '|| Enter Valid Email';
+                            //   },
+                            //   style: TextStyle(color: Colors.blueGrey),
+                            //   decoration: inputDecoration.copyWith(
+                            //       labelText: "Email Adress"),
+                            // ),
+                            SizedBox(height: 15),
+                            /* -------------------------------------------------------------------------- */
+                            /*                                  USERNAME                                  */
+                            /* -------------------------------------------------------------------------- */
                             TextFormField(
                               onChanged: (value) {
                                 setState(() {
-                                  _email = value;
+                                  _username = value;
                                 });
                               },
                               validator: (value) {
                                 setState(() {
-                                  _email = value!;
+                                  _username = value!;
                                 });
-                                return RegExp(
-                                            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-                                        .hasMatch(value!)
-                                    ? null
-                                    : '|| Enter Valid Email';
+                                return value!.isEmpty
+                                    ? "Enter Valid Email"
+                                    : null;
                               },
                               style: TextStyle(color: Colors.blueGrey),
                               decoration: inputDecoration.copyWith(
-                                  labelText: "Email Adress"),
+                                  labelText: "Name"),
                             ),
                             SizedBox(height: 15),
-                            //password
+                            /* -------------------------------------------------------------------------- */
+                            /*                                 //PASSWORD                                 */
+                            /* -------------------------------------------------------------------------- */
                             TextFormField(
                               validator: (val) {
                                 setState(() {
@@ -153,20 +206,37 @@ class _LoginState extends State<Login> {
                                 Expanded(
                                   child: RaisedButton(
                                     onPressed: () async {
-                                      setState(() => loading = true);
+                                      // setState(() => loading = true);
                                       /* -------------------------------------------------------------------------- */
                                       /*                                 validation                                 */
                                       /* -------------------------------------------------------------------------- */
                                       if (loginFormKey.currentState!
                                           .validate()) {
-                                        // print("email is : $_email");
-                                        // print("password is : $_password");
+                                        final _email = "$_username@gmail.com";
+                                        print("Username is : $_username");
+                                        print("email is : $_email");
+                                        print("password is : $_password");
+
+                                        QuerySnapshot saveDetails =
+                                            await db.getUserByEmail(_email);
+
+                                        print(
+                                            "SNAPSHOT IS : ${saveDetails.docs.first.get('name')}");
+                                        Helper.saveUserLoggedInSp(true);
+                                        db.setUserOnline(Me.myName);
+                                        Helper.saveUseremailSp(saveDetails
+                                            .docs.first
+                                            .get('email'));
+                                        
+                                        Helper.saveUsernameSp(
+                                            saveDetails.docs.first.get('name'));
                                         dynamic result =
                                             await auth.loginInWithEmail(
                                                 _email, _password);
+
                                         print("RESULT IS : $result ");
+                                        
                                         if (result == null) {
-                                          
                                           setState(() {
                                             final errorer =
                                                 "Please Register or Enter Valid Details !";
@@ -174,7 +244,7 @@ class _LoginState extends State<Login> {
                                           });
                                         } else {
                                           Helper.saveUserLoggedInSp(true);
-                                          Helper.saveUseremailSp(_email);
+                                          Helper.saveUseremailSp(_username);
                                           // navigate
                                           Navigator.pushReplacement(
                                             context,
@@ -182,7 +252,12 @@ class _LoginState extends State<Login> {
                                               builder: (corntext) => Home(),
                                             ),
                                           );
+                                          setState(() => loading = false);
                                         }
+                                      } else {
+                                        setState(() => _error =
+                                            "Please Register or Enter Valid Details !");
+                                        setState(() => loading = false);
                                       }
                                     },
                                     padding: const EdgeInsets.symmetric(
@@ -207,25 +282,6 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       SizedBox(height: 20),
-                      if (_error != '')
-                        ShowUpAnimation(
-                            curve: Curves.bounceInOut,
-                            animationDuration: Duration(seconds: 1),
-                            direction: Direction.horizontal,
-                            child: Chip(
-                                avatar: CircleAvatar(
-                                  child: Icon(Icons.wrong_location,
-                                      color: Colors.redAccent, size: 30),
-                                  backgroundColor: black,
-                                ),
-                                labelPadding: EdgeInsets.fromLTRB(0, 10, 5, 10),
-                                backgroundColor: Colors.redAccent,
-                                label: Text(_error,
-                                    style: GoogleFonts.roboto(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600)))),
-                      SizedBox(height: 20),
-                      svg,
                     ],
                   )),
             ),

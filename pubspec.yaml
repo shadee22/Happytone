@@ -91,6 +91,6 @@ flutter:
       fonts:
         - asset: fonts/Righteous-Regular.ttf
 
-  
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

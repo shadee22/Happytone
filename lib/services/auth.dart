@@ -7,8 +7,12 @@ class MainUser {
   MainUser({required this.userid});
 }
 
+
 class Authentication {
   FirebaseAuth auth = FirebaseAuth.instance;
+
+
+
 
   MainUser? mainUser(uid) {
     return uid != null ? MainUser(userid: uid) : null;

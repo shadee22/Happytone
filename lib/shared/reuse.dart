@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 // import 'package:flutter_svg/flutter_svg.dart';
 
 //COLORS :
@@ -9,9 +10,14 @@ final logoColor = Color(0xffFBAF00);
 final greyBgColor = Color(0xff202020);
 final loginButtonColor = Color(0xffFF9500);
 final grey = Color(0xffCED4DA);
+final myTileColor = Color(0xff682a92);
+final friendTileColor = Color(0xfffffdf7);
 final white = Colors.white;
 final black = Colors.black;
 
+// F94144
+
+// F4A261 // enemy 
 extension CapExtension on String {
   String get inCaps =>
       this.length > 0 ? '${this[0].toUpperCase()}${this.substring(1)}' : '';
@@ -31,6 +37,7 @@ final logo = Text('HappyTone',
     style: GoogleFonts.righteous(
       fontSize: 37,
       color: logoColor,
+      
     ));
 
 final homeLogo = GoogleFonts.righteous(
@@ -65,7 +72,7 @@ final inputDecoration = InputDecoration(
   hintStyle: TextStyle(
     color: Colors.white,
   ),
-  labelText: "Username",
+  labelText: "Name",
   labelStyle: TextStyle(color: white.withOpacity(0.7)),
   fillColor: Colors.grey.withOpacity(0.2),
   filled: true,
