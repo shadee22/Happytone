@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:happytone/screens/home/chatlist.dart';
 import 'package:happytone/screens/home/chats.dart';
 import 'package:happytone/services/helper.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:happytone/services/models.dart';
 import 'package:happytone/shared/loading.dart';
 import 'package:show_up_animation/show_up_animation.dart';
@@ -33,6 +34,10 @@ class _SearchState extends State<Search> {
     
     super.initState();
   }
+
+
+final Widget svg = SvgPicture.asset('assets/search.svg',
+    fit: BoxFit.contain, height: 200, width: 200,);
 
   
 
@@ -106,7 +111,15 @@ class _SearchState extends State<Search> {
           backgroundColor: greyBgColor,
         ),
         body: checkEmpty
-            ? SearchLoading()
+            ? Center(child: Column(
+              children: [
+                SizedBox(height: 100,),
+                svg,
+                SizedBox(height: 30,),
+
+                SearchLoading()
+              ],
+            ))
             : ListView.builder(
                 padding: EdgeInsets.fromLTRB(10, 5, 10, 10),
                 itemCount: searchResultSnapshot?.docs.length,

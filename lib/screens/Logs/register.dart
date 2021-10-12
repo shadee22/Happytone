@@ -40,10 +40,6 @@ class _RegisterState extends State<Register> {
 
   bool loading = false;
 
-  toggler() {
-    setState(() => loading = !loading);
-  }
-
   @override
   Widget build(BuildContext context) {
     final auth = Authentication();
@@ -70,26 +66,26 @@ class _RegisterState extends State<Register> {
                     //   // },
                     //   child : Icon(Icons.tap_and_play),
                     // ),
-                    if (_error != '')
-                      ShowUpAnimation(
-                        curve: Curves.bounceInOut,
-                        animationDuration: Duration(seconds: 2),
-                        direction: Direction.horizontal,
-                        child: Chip(
-                          avatar: CircleAvatar(
-                            child: Icon(Icons.wrong_location,
-                                color: Colors.redAccent, size: 30),
-                            backgroundColor: black,
-                          ),
-                          labelPadding: EdgeInsets.fromLTRB(10, 10, 5, 10),
-                          backgroundColor: Colors.redAccent,
-                          label: Text(
-                            _error,
-                            style: GoogleFonts.roboto(
-                                fontSize: 16, fontWeight: FontWeight.w600),
-                          ),
-                        ),
-                      ),
+                    // if (_error != '')
+                    //   ShowUpAnimation(
+                    //     curve: Curves.bounceInOut,
+                    //     animationDuration: Duration(seconds: 2),
+                    //     direction: Direction.horizontal,
+                    //     child: Chip(
+                    //       avatar: CircleAvatar(
+                    //         child: Icon(Icons.wrong_location,
+                    //             color: Colors.redAccent, size: 30),
+                    //         backgroundColor: black,
+                    //       ),
+                    //       labelPadding: EdgeInsets.fromLTRB(10, 10, 5, 10),
+                    //       backgroundColor: Colors.redAccent,
+                    //       label: Text(
+                    //         _error,
+                    //         style: GoogleFonts.roboto(
+                    //             fontSize: 16, fontWeight: FontWeight.w600),
+                    //       ),
+                    //     ),
+                    //   ),
                     Align(
                       alignment: Alignment.bottomLeft,
                       child: Text(
@@ -249,6 +245,8 @@ class _RegisterState extends State<Register> {
                                     onPressed: () {
                                       setState(() {
                                         loading = true;
+                                      });
+                                      setState(() {
                                         _email = "$_name@gmail.com";
                                       });
                                       if (registerFormKey.currentState!
@@ -275,11 +273,23 @@ class _RegisterState extends State<Register> {
                                           "isOnline": true,
                                         };
 
+                                            
+
+                                        Future.delayed(
+                                            Duration(milliseconds: 2000), () {
+                                            return succussDialog(context,
+                                                "Hola! ${_name.inCaps}");
+                                        });
+
                                         db.setUserDetails(register_details_map);
                                         Helper.saveUserLoggedInSp(true);
                                         Helper.saveUseremailSp(_email);
                                         Helper.saveUsernameSp(_name);
 
+                                        Me.myName = _name;
+                                        // Future.delayed(milliseconds : 500){
+                                        //   return context;
+                                        // });
                                         setState(() => loading = false);
                                         Navigator.pushReplacement(
                                           context,
@@ -288,9 +298,10 @@ class _RegisterState extends State<Register> {
                                           ),
                                         );
                                       } else {
-                                        setState(() => loading = false);
                                         setState(() => _error =
                                             "Enter Details Properly !");
+                                        errorDialog(context, _error);
+                                        setState(() => loading = false);
                                       }
                                     },
                                     padding: const EdgeInsets.symmetric(

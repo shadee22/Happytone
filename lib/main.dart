@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:happytone/phone/input.dart';
 // import 'package:happytone/screens/Logs/login.dart';
 // import 'package:happytone/screens/Logs/register.dart';
 import 'package:happytone/screens/wrapper.dart';
@@ -24,6 +25,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
+      /* -------------------------------------------------------------------------- */
+      /*                                FOR HAPPYTONE                               */
+      /* -------------------------------------------------------------------------- */
+      
+      
       home: Scaffold(
         body: SplashScreenView(
          pageRouteTransition: PageRouteTransition.SlideTransition,
@@ -47,5 +54,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
     );
+      // home: Number()
+      // );
   }
 }

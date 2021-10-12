@@ -39,10 +39,12 @@ class _WrapperState extends State<Wrapper> {
 
   @override
   Widget build(BuildContext context) {
-    return loggedIn
-        ? Home()
-        : showSignIn
-            ? Login(toggle: toggle)
-            : Register(toggle: toggle);
+    return
+         loggedIn
+            ?
+        Home()
+    : showSignIn
+        ? Login(toggle: toggle)
+        : Register(toggle: toggle);
   }
 }

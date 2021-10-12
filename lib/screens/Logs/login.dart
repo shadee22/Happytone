@@ -59,27 +59,27 @@ class _LoginState extends State<Login> {
                       svg,
                       SizedBox(height: 20),
 
-                      if (_error != '')
-                        ShowUpAnimation(
-                          offset: 3,
-                          curve: Curves.bounceInOut,
-                          animationDuration: Duration(seconds: 1),
-                          direction: Direction.horizontal,
-                          child: Chip(
-                            avatar: CircleAvatar(
-                              child: Icon(Icons.wrong_location,
-                                  color: Colors.redAccent, size: 30),
-                              backgroundColor: black,
-                            ),
-                            labelPadding: EdgeInsets.fromLTRB(0, 10, 5, 10),
-                            backgroundColor: Colors.redAccent,
-                            label: Text(
-                              _error,
-                              style: GoogleFonts.roboto(
-                                  fontSize: 16, fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                        ),
+                      // if (_error != '') errorDialog(context, _error),
+                      // ShowUpAnimation(
+                      //   offset: 3,
+                      //   curve: Curves.bounceInOut,
+                      //   animationDuration: Duration(seconds: 1),
+                      //   direction: Direction.horizontal,
+                      //   child: Chip(
+                      //     avatar: CircleAvatar(
+                      //       child: Icon(Icons.wrong_location,
+                      //           color: Colors.redAccent, size: 30),
+                      //       backgroundColor: black,
+                      //     ),
+                      //     labelPadding: EdgeInsets.fromLTRB(0, 10, 5, 10),
+                      //     backgroundColor: Colors.redAccent,
+                      //     label: Text(
+                      //       _error,
+                      //       style: GoogleFonts.roboto(
+                      //           fontSize: 16, fontWeight: FontWeight.w600),
+                      //     ),
+                      //   ),
+                      // ),
                       // SizedBox(height: 20),
 
                       Align(
@@ -140,8 +140,8 @@ class _LoginState extends State<Login> {
                                     : null;
                               },
                               style: TextStyle(color: Colors.blueGrey),
-                              decoration: inputDecoration.copyWith(
-                                  labelText: "Name"),
+                              decoration:
+                                  inputDecoration.copyWith(labelText: "Name"),
                             ),
                             SizedBox(height: 15),
                             /* -------------------------------------------------------------------------- */
@@ -220,45 +220,71 @@ class _LoginState extends State<Login> {
                                         QuerySnapshot saveDetails =
                                             await db.getUserByEmail(_email);
 
-                                        print(
-                                            "SNAPSHOT IS : ${saveDetails.docs.first.get('name')}");
-                                        Helper.saveUserLoggedInSp(true);
-                                        db.setUserOnline(Me.myName);
-                                        Helper.saveUseremailSp(saveDetails
-                                            .docs.first
-                                            .get('email'));
-                                        
+                                        // print(
+                                        //     "SNAPSHOT IS : ${saveDetails.docs.first.get('name')} ");
+
+                                        // Helper.saveUserLoggedInSp(true);
+                                        // Helper.saveUseremailSp(saveDetails
+                                        //     .docs.first
+                                        //     .get('email'));
                                         Helper.saveUsernameSp(
                                             saveDetails.docs.first.get('name'));
+                                            Me.myName = _username;
+
                                         dynamic result =
                                             await auth.loginInWithEmail(
                                                 _email, _password);
 
                                         print("RESULT IS : $result ");
-                                        
+                                        setState(() => loading = false);
                                         if (result == null) {
                                           setState(() {
+                                            errorDialog(context, _error);
                                             final errorer =
                                                 "Please Register or Enter Valid Details !";
                                             _error = errorer;
                                           });
+                                          setState(() => loading = false);
                                         } else {
+                                          Me.myName = _username;
+                                          Helper.saveUsernameSp(saveDetails
+                                              .docs.first
+                                              .get('name'));
+
                                           Helper.saveUserLoggedInSp(true);
                                           Helper.saveUseremailSp(_username);
-                                          // navigate
+                                          db.setUserOnline(_username);
+                                          Future.delayed(
+                                            Duration(milliseconds: 500), () {
+
+                                          showingUsername(context) {
+                                              return succussDialog(context,
+                                                  "Hola! ${_username.inCaps}");
+                                            }
+                                          setState(() {
+                                          });
+                                        });
+
+                                        Future.delayed(
+                                            Duration(milliseconds: 2000), () {
+                                            return succussDialog(context,
+                                                "Hola! ${_username.inCaps}");
+                                        });
+                                          setState(() => loading = false);
                                           Navigator.pushReplacement(
                                             context,
                                             MaterialPageRoute(
                                               builder: (corntext) => Home(),
                                             ),
                                           );
-                                          setState(() => loading = false);
                                         }
                                       } else {
+                                        errorDialog(context, _error);
                                         setState(() => _error =
                                             "Please Register or Enter Valid Details !");
                                         setState(() => loading = false);
                                       }
+                                      setState(() => loading = false);
                                     },
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 30, vertical: 10),
