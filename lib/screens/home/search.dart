@@ -2,9 +2,9 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:happytone/screens/home/chatlist.dart';
+// import 'package:happytone/screens/home/chatlist.dart';
 import 'package:happytone/screens/home/chats.dart';
-import 'package:happytone/services/helper.dart';
+// import 'package:happytone/services/helper.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:happytone/services/models.dart';
 import 'package:happytone/shared/loading.dart';
@@ -77,15 +77,19 @@ final Widget svg = SvgPicture.asset('assets/search.svg',
 
   @override
   Widget build(BuildContext context) {
+     final scafColor = Theme.of(context).scaffoldBackgroundColor;
+    final primaryColor = Theme.of(context).primaryColor;
+    final drawerColor = Theme.of(context).primaryColorDark;
+    final textColor = Theme.of(context).accentColor;
 
     print('MY NAME IS : ${Me.myName}');
     print('SECOND USERNAME IS : $secondUsername');
     
     return Scaffold(
-        backgroundColor: greyBgColor,
+        backgroundColor: primaryColor,
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: logoColor),
+            icon: Icon(Icons.arrow_back, color: mainYellow),
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: TextField(
@@ -108,7 +112,7 @@ final Widget svg = SvgPicture.asset('assets/search.svg',
             style:
                 TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 20),
           ),
-          backgroundColor: greyBgColor,
+          backgroundColor: darkBg,
         ),
         body: checkEmpty
             ? Center(child: Column(
@@ -117,7 +121,7 @@ final Widget svg = SvgPicture.asset('assets/search.svg',
                 svg,
                 SizedBox(height: 30,),
 
-                SearchLoading()
+                SearchLoading(bgColor : primaryColor)
               ],
             ))
             : ListView.builder(

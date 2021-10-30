@@ -1,10 +1,13 @@
 // ignore_for_file: prefer_const_constructors, deprecated_member_use, use_key_in_widget_constructors, prefer_const_constructors_in_immutables, prefer_final_fields, avoid_print, must_be_immutable, non_constant_identifier_names, avoid_unnecessary_containers
 
 // import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:happytone/services/models.dart';
-import 'package:show_up_animation/show_up_animation.dart';
+// import 'package:show_up_animation/show_up_animation.dart';
 // import 'package:happytone/screens/Logs/login.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:happytone/screens/home/home.dart';
 import 'package:happytone/services/auth.dart';
 import 'package:happytone/services/database.dart';
@@ -41,14 +44,62 @@ class _RegisterState extends State<Register> {
   bool loading = false;
 
   @override
+  void initState() {
+    super.initState();
+    print(checkConnection());
+  }
+
+  final Widget svg = SvgPicture.asset(
+    'assets/no.svg',
+    fit: BoxFit.contain,
+    height: 200,
+    width: 200,
+  );
+
+  final Widget noInternetSvg = SvgPicture.asset(
+    'assets/no_internet.svg',
+    fit: BoxFit.contain,
+    height: 15,
+    width: 150,
+  );
+
+
+
+  
+
+  @override
   Widget build(BuildContext context) {
+    checkConnection().then((v) {
+      // if (v == "wifi") {
+      //   return showDialog(
+      //       context: context,
+      //       builder: (context) {
+      //         return noConnectionBox(v);
+      //       });
+      // }
+      // if (v == "mobile") {
+      //   return showDialog(
+      //       context: context,
+      //       builder: (context) {
+      //         return noConnectionBox(v);
+      //       });
+      // }
+      if (v == "no internet") {
+        return showDialog(
+            context: context,
+            builder: (context) {
+              return noConnectionBox(v);
+            });
+      }
+    });
+
     final auth = Authentication();
     final db = Database();
 
     return loading
         ? Loading()
         : Scaffold(
-            backgroundColor: greyBgColor,
+            backgroundColor: darkBg,
             body: SingleChildScrollView(
               physics: ClampingScrollPhysics(),
               child: Padding(
@@ -60,41 +111,15 @@ class _RegisterState extends State<Register> {
                     SizedBox(height: 20),
                     svg,
                     SizedBox(height: 10),
-                    // RaisedButton(
-                    //   // onPressed: (){
-                    //   //    toggler();
-                    //   // },
-                    //   child : Icon(Icons.tap_and_play),
-                    // ),
-                    // if (_error != '')
-                    //   ShowUpAnimation(
-                    //     curve: Curves.bounceInOut,
-                    //     animationDuration: Duration(seconds: 2),
-                    //     direction: Direction.horizontal,
-                    //     child: Chip(
-                    //       avatar: CircleAvatar(
-                    //         child: Icon(Icons.wrong_location,
-                    //             color: Colors.redAccent, size: 30),
-                    //         backgroundColor: black,
-                    //       ),
-                    //       labelPadding: EdgeInsets.fromLTRB(10, 10, 5, 10),
-                    //       backgroundColor: Colors.redAccent,
-                    //       label: Text(
-                    //         _error,
-                    //         style: GoogleFonts.roboto(
-                    //             fontSize: 16, fontWeight: FontWeight.w600),
-                    //       ),
-                    //     ),
-                    //   ),
                     Align(
                       alignment: Alignment.bottomLeft,
                       child: Text(
                         'Create Your Account !',
-                        style: GoogleFonts.pacifico(
-                          fontSize: 35,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xffFFF3B7),
-                        ),
+                        style: TextStyle(
+                            fontFamily: 'lato',
+                            fontSize: 33,
+                            fontWeight: FontWeight.bold,
+                            color: white),
                       ),
                     ),
                     SizedBox(height: 20),
@@ -140,7 +165,7 @@ class _RegisterState extends State<Register> {
                           //     hintText: 'Your Email',
                           //     labelText: 'Email',
                           //     prefixIcon: Icon(Icons.email_rounded,
-                          //         color: loginButtonColor),
+                          //         color: mainYellow),
                           //   ),
                           // ),
                           // SizedBox(height: 15),
@@ -167,7 +192,7 @@ class _RegisterState extends State<Register> {
                               hintText: 'Your Password',
                               labelText: 'Password',
                               prefixIcon:
-                                  Icon(Icons.vpn_key, color: loginButtonColor),
+                                  Icon(Icons.vpn_key, color: mainYellow),
                             ),
                           ),
                           SizedBox(height: 10),
@@ -189,23 +214,24 @@ class _RegisterState extends State<Register> {
                             decoration: inputDecoration.copyWith(
                               hintText: 'Confirm Password',
                               labelText: 'Confirm Password',
-                              prefixIcon: Icon(Icons.verified_user,
-                                  color: loginButtonColor),
+                              prefixIcon:
+                                  Icon(Icons.verified_user, color: mainYellow),
                             ),
                           ),
                           /* -------------------------------------------------------------------------- */
                           /*                              //FORGOT PASSWORD                             */
                           /* -------------------------------------------------------------------------- */
-                          Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                'Forgot Password ?',
-                                style: TextStyle(color: white),
-                              ),
-                            ),
-                          ),
+                          // Align(
+                          //   alignment: Alignment.bottomLeft,
+                          //   child: Padding(
+                          //     padding: const EdgeInsets.all(8.0),
+                          //     child: Text(
+                          //       'Forgot Password ?',
+                          //       style: TextStyle(color: white),
+                          //     ),
+                          //   ),
+                          // ),
+                          SizedBox(height: 10),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
@@ -220,7 +246,7 @@ class _RegisterState extends State<Register> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 10, vertical: 10),
                                   splashColor: Colors.blueGrey,
-                                  color: greyBgColor,
+                                  color: darkBg,
                                   child: Text(
                                     'Login',
                                     style: robotoFont.copyWith(
@@ -273,12 +299,10 @@ class _RegisterState extends State<Register> {
                                           "isOnline": true,
                                         };
 
-                                            
-
                                         Future.delayed(
                                             Duration(milliseconds: 2000), () {
-                                            return succussDialog(context,
-                                                "Hola! ${_name.inCaps}");
+                                          return succussDialog(
+                                              context, "Hola! ${_name.inCaps}");
                                         });
 
                                         db.setUserDetails(register_details_map);
@@ -307,7 +331,7 @@ class _RegisterState extends State<Register> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 10, vertical: 10),
                                     splashColor: Colors.blueGrey,
-                                    color: loginButtonColor,
+                                    color: mainYellow,
                                     child: Text(
                                       'Register',
                                       style: robotoFont.copyWith(

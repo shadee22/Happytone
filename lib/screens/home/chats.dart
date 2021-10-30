@@ -86,10 +86,13 @@ class _ChatsState extends State<Chats> {
                   itemBuilder: (context, index) {
                     final myMessage = snapshot.data!.docs[index].get('message');
                     final sendBy = snapshot.data!.docs[index].get('sendby');
+                    final sendTime = snapshot.data!.docs[index].get('time');
                     // print(myMessage);
                     return MessageTile(
-                        myMessage: myMessage,
-                        sendByMe: sendBy == Me.myName.toString());
+                      myMessage: myMessage,
+                      sendByMe: sendBy == Me.myName.toString(),
+                      time: sendTime,
+                    );
                   })
               : SearchLoading();
         });
@@ -97,10 +100,18 @@ class _ChatsState extends State<Chats> {
 
   @override
   Widget build(BuildContext context) {
+
+
+    //COLORS
+
+    final scafColor = Theme.of(context).scaffoldBackgroundColor;
+    final primaryColor = Theme.of(context).primaryColor;
+    final drawerColor = Theme.of(context).primaryColorDark;
+    final textColor = Theme.of(context).accentColor;
     TextEditingController inputman = TextEditingController();
 
     return Scaffold(
-        backgroundColor: greyBgColor,
+        backgroundColor: primaryColor,
         appBar: AppBar(
             centerTitle: true,
             shape: RoundedRectangleBorder(
@@ -111,10 +122,12 @@ class _ChatsState extends State<Chats> {
               " ${Me.friend?.inCaps} ",
               style: GoogleFonts.aleo(
                 fontSize: 25,
-                color: white,
+                color: primaryColor,
               ),
             ),
-            backgroundColor: Color(0xff4a4e69).withOpacity(0.5)),
+            // backgroundColor: Color(0xff4a4e69).withOpacity(0.5),
+            backgroundColor: mainYellow,
+            ),
         body: Stack(
           children: [
             Container(
@@ -186,7 +199,7 @@ class _ChatsState extends State<Chats> {
                                 left: Radius.circular(50),
                               ),
                             ),
-                            color: logoColor,
+                            color: mainYellow,
                             onPressed: () {
                               setState(() {
                                 message = inputman.text;
@@ -195,7 +208,7 @@ class _ChatsState extends State<Chats> {
                                 sendMessage();
                               });
                             },
-                            child: Icon(Icons.send_rounded, size: 25),
+                            child: Icon(Icons.send_rounded, size: 25 , color : darkBg),
                           ),
                         )
                       ],
@@ -211,8 +224,9 @@ class _ChatsState extends State<Chats> {
 
 class MessageTile extends StatefulWidget {
   String myMessage;
+  final time;
   bool? sendByMe;
-  MessageTile({required this.myMessage, this.sendByMe});
+  MessageTile({required this.myMessage, this.sendByMe, this.time});
 
   @override
   _MessageTileState createState() => _MessageTileState();
@@ -221,6 +235,14 @@ class MessageTile extends StatefulWidget {
 class _MessageTileState extends State<MessageTile> {
   @override
   Widget build(BuildContext context) {
+    var timer = Timestamp.fromMicrosecondsSinceEpoch(widget.time);
+    var last = timer.toDate();
+    var minute = last.minute;
+    var hour = last.hour;
+
+    // ('MM/dd/yyyy, hh:mm a').format(myDate);
+    // final date = timer.toDate() ;
+
     return Container(
       alignment:
           widget.sendByMe! ? Alignment.centerRight : Alignment.centerLeft,
@@ -232,7 +254,7 @@ class _MessageTileState extends State<MessageTile> {
           decoration: BoxDecoration(
             color: widget.sendByMe!
                 ? myTileColor
-                : Colors.blueGrey.withOpacity(0.1),
+                : Colors.blueGrey,
             border: widget.sendByMe!
                 ? Border.all(width: 0)
                 : Border.all(
@@ -245,21 +267,31 @@ class _MessageTileState extends State<MessageTile> {
           ),
           margin: EdgeInsets.all(3),
           padding: EdgeInsets.all(12),
-          child: Text(
-            widget.myMessage,
-            style: GoogleFonts.roboto(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              shadows: [
-                Shadow(
-                  offset: Offset(1.0, 1.0),
-                  blurRadius: 5.0,
-                  color: black.withOpacity(0.5),
-                ),
-              ],
-              letterSpacing : 0.1,
-              color: white.withOpacity(0.9),
-            ),
+          child: RichText(
+            text: TextSpan(children: [
+              TextSpan(
+                  text: widget.myMessage,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'lato',
+                    shadows: [
+                      Shadow(
+                        offset: Offset(1.0, 1.0),
+                        blurRadius: 5.0,
+                        color: black.withOpacity(0.5),
+                      ),
+                    ],
+                    // letterSpacing: ,
+                  )),
+              TextSpan(text: '   '),
+              TextSpan(
+                  text: '${hour} : ${minute} ',
+                  style: TextStyle(
+                    color: grey,
+                    fontSize: 10,
+                  )),
+            ]),
           ),
         ),
       ),

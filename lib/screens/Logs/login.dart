@@ -11,7 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:happytone/screens/home/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:show_up_animation/show_up_animation.dart';
+// import 'package:show_up_animation/show_up_animation.dart';
 
 const String secondassetName = 'assets/registaa.svg';
 
@@ -43,10 +43,36 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+
+    checkConnection().then((v) {
+      // if (v == "wifi") {
+      //   return showDialog(
+      //       context: context,
+      //       builder: (context) {
+      //         return noConnectionBox(v);
+      //       });
+      // }
+      // if (v == "mobile") {
+      //   return showDialog(
+      //       context: context,
+      //       builder: (context) {
+      //         return noConnectionBox(v);
+      //       });
+      // }
+      if (v == "no internet") {
+        return showDialog(
+            context: context,
+            builder: (context) {
+              return noConnectionBox(v);
+            });
+      }
+    });
+    
+    
     return loading
         ? Loading()
         : Scaffold(
-            backgroundColor: greyBgColor,
+            backgroundColor: darkBg,
             body: SingleChildScrollView(
               physics: ClampingScrollPhysics(),
               child: Padding(
@@ -86,14 +112,10 @@ class _LoginState extends State<Login> {
                         alignment: Alignment.bottomLeft,
                         child: Text(
                           'Welcome !',
-                          style: GoogleFonts.pacifico(
-                            fontSize: 40,
-                            fontWeight: FontWeight.w400,
-                            color: Color(0xffFFF3B7),
-                          ),
+                          style: TextStyle(fontFamily: 'lato', fontSize: 33 , fontWeight: FontWeight.bold , color : white),
                         ),
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 10),
                       Form(
                         key: loginFormKey,
                         child: Column(
@@ -162,7 +184,7 @@ class _LoginState extends State<Login> {
                                 hintText: 'Your Password',
                                 labelText: 'Password',
                                 prefixIcon: Icon(Icons.vpn_key,
-                                    color: loginButtonColor),
+                                    color: mainYellow),
                               ),
                             ),
                             SizedBox(height: 10),
@@ -186,7 +208,7 @@ class _LoginState extends State<Login> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 30, vertical: 10),
                                     splashColor: Colors.blueGrey,
-                                    color: greyBgColor,
+                                    color: darkBg,
                                     child: Text(
                                       'Register',
                                       style: robotoFont.copyWith(
@@ -257,10 +279,10 @@ class _LoginState extends State<Login> {
                                           Future.delayed(
                                             Duration(milliseconds: 500), () {
 
-                                          showingUsername(context) {
-                                              return succussDialog(context,
-                                                  "Hola! ${_username.inCaps}");
-                                            }
+                                          // showingUsername(context) {
+                                          //     return succussDialog(context,
+                                          //         "Hola! ${_username.inCaps}");
+                                          //   }
                                           setState(() {
                                           });
                                         });
@@ -289,7 +311,7 @@ class _LoginState extends State<Login> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 30, vertical: 10),
                                     splashColor: Colors.blueGrey,
-                                    color: loginButtonColor,
+                                    color: mainYellow,
                                     child: Text(
                                       'Login',
                                       style: robotoFont.copyWith(
