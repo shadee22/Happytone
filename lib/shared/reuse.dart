@@ -5,10 +5,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-// import 'package:happytone/screens/home/image.dart';
 import 'package:connectivity/connectivity.dart';
-import 'package:image_picker/image_picker.dart';
-
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -24,6 +21,7 @@ final lightBg = Color(0xff202020);
 final grey = Color(0xffCED4DA);
 final myTileColor = Color(0xff682a92);
 final friendTileColor = Color(0xfffffdf7);
+// ignore: prefer_const_declarations
 final white = Colors.white;
 final black = Colors.black;
 final red = Colors.redAccent;
@@ -70,13 +68,11 @@ final homeLogo = GoogleFonts.righteous(
 
 homeMainLogo(textcolor, primary) {
   return RichText(
-    text: TextSpan(
-      style: TextStyle(fontFamily : 'right'),
-      children: [
-    TextSpan(text : "H", style: TextStyle(color: mainYellow, fontSize: 25)),
-    TextSpan(text : "appy", style: TextStyle(color: textcolor, fontSize: 25)),
-    TextSpan(text : "T", style: TextStyle(color: textcolor ,  fontSize: 25)),
-    TextSpan(text : "one", style: TextStyle(color: textcolor, fontSize: 25)),
+      text: TextSpan(style: TextStyle(fontFamily: 'right'), children: [
+    TextSpan(text: "H", style: TextStyle(color: mainYellow, fontSize: 25)),
+    TextSpan(text: "appy", style: TextStyle(color: textcolor, fontSize: 25)),
+    TextSpan(text: "T", style: TextStyle(color: textcolor, fontSize: 25)),
+    TextSpan(text: "one", style: TextStyle(color: textcolor, fontSize: 25)),
   ]));
 }
 
@@ -148,79 +144,72 @@ List<String> captionList = [
 
 // Dialogs
 
-showCamera(context , getImage){
-  return showDialog(
-                              context: context,
-                              builder: (context) {
-                                return BackdropFilter(
-                                  filter:
-                                      ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                                  child: AlertDialog(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    backgroundColor: white.withOpacity(0.3),
-                                    title: Text('Select Photo From',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(color: white)),
-                                    actions: <Widget>[
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          TextButton(
-                                            onPressed: () {},
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                getImage(ImageSource.camera);
-                                                Navigator.pop(context);
-                                                // showingDialog(context, Icons.menu);
-                                              },
-                                              child: Chip(
-                                                  label: Text('Camera',
-                                                      style: TextStyle(
-                                                          fontSize: 17,
-                                                          fontWeight:
-                                                              FontWeight.bold)),
-                                                  padding: EdgeInsets.all(15),
-                                                  avatar: CircleAvatar(
-                                                    backgroundColor:
-                                                        Colors.blue,
-                                                  )),
-                                            ),
-                                          ),
-                                          TextButton(
-                                            onPressed: () {},
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                getImage(ImageSource.gallery);
-                                                Navigator.pop(context);
-                                              },
-                                              child: Chip(
-                                                label: Text('Gallery',
-                                                    style: TextStyle(
-                                                        fontSize: 17,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                                padding: EdgeInsets.all(15),
-                                                avatar: CircleAvatar(
-                                                  backgroundColor: Colors.red,
-                                                  radius: 50.0,
-                                                  // child : Icon(Icons.photo_album),r
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                );
-                              },
-                            );
+// showCamera(context, getImage) {
+//   return showDialog(
+//     context: context,
+//     builder: (context) {
+//       return BackdropFilter(
+//         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+//         child: AlertDialog(
+//           shape:
+//               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+//           backgroundColor: white.withOpacity(0.3),
+//           title: Text('Select Photo From',
+//               textAlign: TextAlign.center, style: TextStyle(color: white)),
+//           actions: <Widget>[
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceAround,
+//               children: [
+//                 TextButton(
+//                   onPressed: () {},
+//                   child: GestureDetector(
+//                     onTap: () {
+//                       getImage(ImageSource.camera);
+//                       Navigator.pop(context);
+//                       // showingDialog(context, Icons.menu);
+//                     },
+//                     child: Chip(
+//                         label: Text('Camera',
+//                             style: TextStyle(
+//                                 fontSize: 17, fontWeight: FontWeight.bold)),
+//                         padding: EdgeInsets.all(15),
+//                         avatar: CircleAvatar(
+//                           backgroundColor: Colors.blue,
+//                         )),
+//                   ),
+//                 ),
+//                 TextButton(
+//                   onPressed: () {},
+//                   child: GestureDetector(
+//                     onTap: () {
+//                       getImage(ImageSource.gallery);
+//                       Navigator.pop(context);
+//                     },
+//                     child: Chip(
+//                       label: Text('Gallery',
+//                           style: TextStyle(
+//                               fontSize: 17, fontWeight: FontWeight.bold)),
+//                       padding: EdgeInsets.all(15),
+//                       avatar: CircleAvatar(
+//                         backgroundColor: Colors.red,
+//                         radius: 50.0,
+//                         // child : Icon(Icons.photo_album),r
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//               ],
+//             )
+//           ],
+//         ),
+//       );
+//     },
+//   );
+// }
+
+showingDiaolog(context, setImageGallery, setImageCamera) {
+  
 }
-
-
 
 errorDialog(context, dialog) {
   return showTopSnackBar(
@@ -276,7 +265,6 @@ succussDialog(context, dialog) {
 //       },
 //     );
 //   }
-
 
 //checking Connection
 checkConnection() async {

@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, avoid_print, use_key_in_widget_constructors, unused_local_variable, must_be_immutable, prefer_const_literals_to_create_immutables, prefer_is_empty, unnecessary_this, unnecessary_brace_in_string_interps, prefer_const_declarations, unnecessary_string_escapes, sized_box_for_whitespace
+// ignore_for_file: prefer_const_constructors, avoid_print, use_key_in_widget_constructors, unused_local_variable, must_be_immutable, prefer_const_literals_to_create_immutables, prefer_is_empty, unnecessary_this, unnecessary_brace_in_string_interps, prefer_const_declarations, unnecessary_string_escapes, sized_box_for_whitespace, deprecated_member_use
 
 // import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -10,7 +10,6 @@ import 'package:happytone/screens/home/userSettings.dart';
 // import 'package:image_picker/image_picker.dart';
 import 'package:happytone/screens/home/chats.dart';
 import 'package:happytone/services/models.dart';
-import 'package:happytone/services/storage.dart';
 import 'package:happytone/shared/loading.dart';
 import 'package:show_up_animation/show_up_animation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -37,40 +36,22 @@ class _ChatlistState extends State<Chatlist> {
 
   @override
   Widget build(BuildContext context) {
-    // String? dpUrl;
-    // final dpUrl =
-    //     Storage().gettingImage(Me.myName.toString().toUpperCase()).then((v) {});
-
-    // print("my url " + " $dpUrl");
-
-    //COLORS
-
+    
     String myname = Me.myName.toString().toUpperCase();
     String? one;
 
-    Storage().gettingImage(myname).then((v) {
-      setState(() {
-        one = v;
-      });
-      return v;
-    });
+    // Storage().gettingImage(myname).then((v) {
+    //   setState(() {
+    //     one = v;
+    //   });
+    //   return v;
+    // });
 
     final scafColor = Theme.of(context).scaffoldBackgroundColor;
     final primaryColor = Theme.of(context).primaryColor;
     final textColor = Theme.of(context).accentColor;
 
     File? imageFile;
-
-    // Future getImage() async {
-    //   var image = await ImagePicker().pickImage(source: ImageSource.camera);
-
-    //   setState(() {
-    //     if (this.mounted) {
-    //       imageFile = File(image!.path);
-    //     }
-    //   });
-    //   print('customImageFile: $imageFile ');
-    // }
 
     final deviceWidth = MediaQuery.of(context).size.width;
     final data = db.allusers;
@@ -79,22 +60,12 @@ class _ChatlistState extends State<Chatlist> {
         stream: db.allusers,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasError) {
-            Chip(label: Text('Somthing Wrong No Data'));
+            return Text('Something Went Wrong');
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
             return SearchLoading();
           }
 
-          if (snapshot.connectionState == ConnectionState.none) {
-            return Center(
-                child: Chip(
-              backgroundColor: Colors.redAccent,
-              label: Text(
-                "THERE IS NO ENTERNET",
-                style: TextStyle(color: white),
-              ),
-            ));
-          }
 
           /* -------------------------------- maintile -------------------------------- */
           // print(snapshot.data.docs.first.get('name'));
@@ -311,7 +282,7 @@ class _ChatlistState extends State<Chatlist> {
                                               .get('message');
                                           return lm;
                                         } catch (e) {
-                                          print(e);
+                                          // print(e);rr
                                         }
                                       }
 

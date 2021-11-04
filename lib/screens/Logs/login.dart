@@ -7,7 +7,6 @@ import 'package:happytone/services/helper.dart';
 import 'package:happytone/services/models.dart';
 import 'package:happytone/shared/reuse.dart';
 import 'package:happytone/shared/loading.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:happytone/screens/home/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, prefer_typing_uninitialized_variables, prefer_const_constructors_in_immutables, use_key_in_widget_constructors, unnecessary_brace_in_string_interps
+
 import 'package:flutter/material.dart';
 import 'package:happytone/shared/reuse.dart';
 import 'package:outline_gradient_button/outline_gradient_button.dart';
@@ -13,7 +15,7 @@ Widget story(context, i) {
       );
     },
     child: Hero(
-      tag: '${i}',
+      tag: '$i',
       child: Padding(
         padding: EdgeInsets.all(3),
         child: OutlineGradientButton(
@@ -69,7 +71,7 @@ class Status extends StatelessWidget {
               children: [
                 SizedBox(height: MediaQuery.of(context).size.height / 6),
                 Hero(
-                  tag: "${i}",
+                  tag: "$i",
                   child: Container(
                     width: double.infinity,
                     height: 500.0,

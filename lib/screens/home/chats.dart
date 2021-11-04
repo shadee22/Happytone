@@ -1,15 +1,13 @@
-// ignore_for_file: unused_import, prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_const_constructors_in_immutables, use_key_in_widget_constructors, avoid_print, deprecated_member_use, unused_local_variable, avoid_unnecessary_containers, must_be_immutable
+// ignore_for_file: unused_import, prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_const_constructors_in_immutables, use_key_in_widget_constructors, avoid_print, deprecated_member_use, unused_local_variable, avoid_unnecessary_containers, must_be_immutable, prefer_typing_uninitialized_variables
 
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/painting.dart';
 import "package:happytone/screens/home/chatlist.dart";
 import 'package:happytone/screens/home/chats.dart';
 import 'package:happytone/services/helper.dart';
@@ -286,7 +284,7 @@ class _MessageTileState extends State<MessageTile> {
                   )),
               TextSpan(text: '   '),
               TextSpan(
-                  text: '${hour} : ${minute} ',
+                  text: '$hour : $minute ',
                   style: TextStyle(
                     color: grey,
                     fontSize: 10,

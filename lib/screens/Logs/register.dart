@@ -1,18 +1,15 @@
 // ignore_for_file: prefer_const_constructors, deprecated_member_use, use_key_in_widget_constructors, prefer_const_constructors_in_immutables, prefer_final_fields, avoid_print, must_be_immutable, non_constant_identifier_names, avoid_unnecessary_containers
 
-// import 'package:firebase_auth/firebase_auth.dart';
-import 'dart:ui';
+
 
 import 'package:flutter/material.dart';
 import 'package:happytone/services/models.dart';
 // import 'package:show_up_animation/show_up_animation.dart';
 // import 'package:happytone/screens/Logs/login.dart';
-import 'package:connectivity/connectivity.dart';
 import 'package:happytone/screens/home/home.dart';
 import 'package:happytone/services/auth.dart';
 import 'package:happytone/services/database.dart';
 import 'package:happytone/shared/reuse.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:happytone/shared/loading.dart';
 import 'package:happytone/services/helper.dart';

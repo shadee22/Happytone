@@ -3,7 +3,7 @@
 // ignore_for_file: prefer_const_declarations, avoid_print
 
 class Me {
-  static String? myName = ' ';
+  static String? myName;
   static String? friend = '';
   static bool isOnline = false;
 }
